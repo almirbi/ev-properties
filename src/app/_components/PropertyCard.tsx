@@ -59,6 +59,7 @@ const CloseWrapper = styled.div`
 const Root = styled.div`
   padding: 8px 12px 8px 8px;
   min-width: 277px;
+  height: 4000px;
   display: inline-block;
   border: 1px solid ${undocumented1F0F0};
 `;
