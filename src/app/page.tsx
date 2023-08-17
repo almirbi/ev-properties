@@ -113,7 +113,14 @@ export default function Home() {
           return (
             <PropertyCard
               key={`prop-id-${property.id}`}
-              onCross={() => {}}
+              onCross={async () => {
+                const { data } = await axios.delete<Property>(
+                  `https://6438f9604660f26eb1a7568b.mockapi.io/api/properties/${property.id}`
+                );
+                setProperties(
+                  properties.filter((property) => property.id !== data.id)
+                );
+              }}
               image={
                 <Image width="180" height="88" alt="test" src="/visual.jpg" />
               }
@@ -185,7 +192,7 @@ const Toolbar = ({ onChange, filters }: ToolbarProps) => {
         </Dropdown>
       </Left>
       <Right>
-        <Button>
+        <Button onClick={() => {}}>
           {/** TODO icon part of button comp */}
           <PlusNaked /> <span>Add property</span>
         </Button>
