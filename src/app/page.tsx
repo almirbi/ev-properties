@@ -8,7 +8,8 @@ import { PlusNaked } from "./_components/Icons";
 import React from "react";
 import useAsyncEffect from "use-async-effect";
 import axios, { AxiosResponse } from "axios";
-import { mq } from "./_ui/MediaQueries";
+import Drawer from "react-modern-drawer";
+import "react-modern-drawer/dist/index.css";
 
 type PropertyType = "house" | "apartment";
 
@@ -64,6 +65,10 @@ export default function Home() {
   const [filters, setFilters] = React.useState<Filters>({});
 
   const filteredSortedProperties = React.useMemo<Property[]>(() => {
+    if (!filters.sort && !filters.type) {
+      return properties;
+    }
+
     const newArray = [...properties];
     if (filters.sort) {
       console.log(filters);
@@ -100,6 +105,11 @@ export default function Home() {
       : newArray;
   }, [filters, properties]);
 
+  const [isOpen, setIsOpen] = React.useState(false);
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
   return (
     <>
       <Toolbar
@@ -107,6 +117,7 @@ export default function Home() {
           setFilters((curr) => ({ ...curr, ...newFilters }))
         }
         filters={filters}
+        onClick={toggleDrawer}
       />
       <Wrapper>
         {filteredSortedProperties.map((property) => {
@@ -147,6 +158,14 @@ export default function Home() {
           );
         })}
       </Wrapper>
+      <Drawer
+        open={isOpen}
+        onClose={toggleDrawer}
+        direction="right"
+        className="bla bla bla"
+      >
+        <div>Hello World</div>
+      </Drawer>
     </>
   );
 }
@@ -154,9 +173,10 @@ export default function Home() {
 type ToolbarProps = {
   onChange: (filters: Filters) => void;
   filters: Filters;
+  onClick: () => void;
 };
 
-const Toolbar = ({ onChange, filters }: ToolbarProps) => {
+const Toolbar = ({ onChange, filters, onClick }: ToolbarProps) => {
   return (
     <ToolbarRoot>
       <Left>
@@ -196,7 +216,7 @@ const Toolbar = ({ onChange, filters }: ToolbarProps) => {
         </Dropdown>
       </Left>
       <Right>
-        <Button onClick={() => {}}>
+        <Button onClick={onClick}>
           {/** TODO icon part of button comp */}
           <PlusNaked /> <span>Add property</span>
         </Button>
