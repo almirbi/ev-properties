@@ -114,12 +114,16 @@ export default function Home() {
             <PropertyCard
               key={`prop-id-${property.id}`}
               onCross={async () => {
-                const { data } = await axios.delete<Property>(
-                  `https://6438f9604660f26eb1a7568b.mockapi.io/api/properties/${property.id}`
-                );
-                setProperties(
-                  properties.filter((property) => property.id !== data.id)
-                );
+                try {
+                  const { data } = await axios.delete<Property>(
+                    `https://6438f9604660f26eb1a7568b.mockapi.io/api/properties/${property.id}`
+                  );
+                  setProperties(
+                    properties.filter((property) => property.id !== data.id)
+                  );
+                } catch (e) {
+                  console.error((e as Error).message);
+                }
               }}
               image={
                 <Image width="180" height="88" alt="test" src="/visual.jpg" />
