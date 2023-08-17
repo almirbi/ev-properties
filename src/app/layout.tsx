@@ -11,6 +11,7 @@ import {
   undocumented1F0F0,
 } from "./_ui/colors";
 
+// TODO extract layout separate
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html>
@@ -22,6 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             margin: 0;
 
             position: relative;
+            font-family: Helvetica Neue;
           }
 
           * {
@@ -49,6 +51,7 @@ const sideWidth = 72;
 
 const ChildrenWrapper = styled.div`
   width: 100%;
+  padding: 59px 24px;
 `;
 
 const Content = styled.main`

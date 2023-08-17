@@ -19,3 +19,22 @@ export const CrossNaked = () => {
     </svg>
   );
 };
+
+export const PlusNaked = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M12.5 4V11.5H20V12.5H12.5V20H11.5V12.5H4V11.5H11.5V4H12.5Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
