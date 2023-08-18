@@ -8,7 +8,7 @@ type Props = {
 
 export function useFilters({ filters, properties }: Props) {
   const filteredSortedProperties = React.useMemo<Property[]>(() => {
-    if (!filters.sort && !filters.filter && !filters.search) {
+    if (!filters.sort && !filters.filter) {
       return properties;
     }
 
@@ -51,7 +51,7 @@ export function useFilters({ filters, properties }: Props) {
     }
 
     return newArray;
-  }, [filters, properties]);
+  }, [filters.filter, filters.sort, properties]);
 
   const searchedProperties = React.useMemo<Property[]>(() => {
     const searchTerm = filters.search?.toLowerCase();
