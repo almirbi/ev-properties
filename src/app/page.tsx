@@ -3,11 +3,9 @@
 import Image from "next/image";
 import { Divider, PropertyCard, Row } from "./_components/PropertyCard";
 import styled from "@emotion/styled";
-import { SecondaryWhite100, TextDisabled, TheRed } from "./_ui/colors";
-import { PlusNaked } from "./_components/Icons";
 import React from "react";
 import useAsyncEffect from "use-async-effect";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { Filters, Property } from "./_components/types";
