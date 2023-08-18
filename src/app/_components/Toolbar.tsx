@@ -5,7 +5,7 @@ import { SecondaryWhite100, TextDisabled, TheRed } from "../_ui/colors";
 import { PlusNaked } from "../_components/Icons";
 import React from "react";
 import "react-modern-drawer/dist/index.css";
-import { Filters } from "./types";
+import { Filters, PropertyType, SortMap } from "./types";
 
 type ToolbarProps = {
   onChange: (filters: Filters) => void;
@@ -13,22 +13,48 @@ type ToolbarProps = {
   onClick: () => void;
 };
 
+const sortMap: { [key: string]: SortMap } = {
+  "1": {
+    type: "price",
+    val: -1,
+  },
+  "2": {
+    type: "price",
+    val: 1,
+  },
+  "3": {
+    type: "title",
+    val: -1,
+  },
+  "4": {
+    type: "title",
+    val: 1,
+  },
+};
+
 export const Toolbar = ({ onChange, filters, onClick }: ToolbarProps) => {
   return (
     <ToolbarRoot>
       <Left>
-        <Input />
+        <Input
+          onChange={(e) => {
+            onChange({
+              ...filters,
+              search: e.target.value,
+            });
+          }}
+        />
         <Dropdown
           onChange={(e) => {
             if (e.target.value === "-") {
               onChange({
                 ...filters,
-                type: undefined,
+                filter: undefined,
               });
             } else {
               onChange({
                 ...filters,
-                type: e.target.value as Filters["type"],
+                filter: e.target.value as PropertyType,
               });
             }
           }}
@@ -41,7 +67,7 @@ export const Toolbar = ({ onChange, filters, onClick }: ToolbarProps) => {
           onChange={(e) => {
             onChange({
               ...filters,
-              sort: e.target.value as "1" | "2" | "3" | "4",
+              sort: sortMap[e.target.value as "1" | "2" | "3" | "4"],
             });
           }}
         >

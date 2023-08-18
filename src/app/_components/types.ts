@@ -9,9 +9,9 @@ export type Property = {
   type: PropertyType;
   title: string;
 };
-
+export type SortMap = { type: "price" | "title"; val: 1 | -1 };
 export type Filters = {
-  type?: PropertyType;
-  // TODO can be nicer
-  sort?: "1" | "2" | "3" | "4";
+  filter?: PropertyType;
+  sort?: SortMap;
+  search?: string;
 };

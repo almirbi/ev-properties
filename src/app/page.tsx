@@ -10,25 +10,7 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { Filters, Property } from "./_components/types";
 import { Toolbar } from "./_components/Toolbar";
-
-const sortMap = {
-  "1": {
-    type: "price",
-    val: -1,
-  },
-  "2": {
-    type: "price",
-    val: 1,
-  },
-  "3": {
-    type: "title",
-    val: -1,
-  },
-  "4": {
-    type: "title",
-    val: 1,
-  },
-};
+import { useFilters } from "./_components/useFilters";
 
 export default function Home() {
   const [properties, setProperties] = React.useState<Property[]>([]);
@@ -46,46 +28,7 @@ export default function Home() {
 
   const [filters, setFilters] = React.useState<Filters>({});
 
-  const filteredSortedProperties = React.useMemo<Property[]>(() => {
-    if (!filters.sort && !filters.type) {
-      return properties;
-    }
-
-    const newArray = [...properties];
-    if (filters.sort) {
-      console.log(filters);
-      const sort = sortMap[filters.sort];
-
-      if (sort?.type) {
-        newArray.sort((a, b) => {
-          const type = sort.type as keyof Property;
-          if (typeof a[type] !== "string" || typeof b[type] !== "string") {
-            return 0;
-          }
-          if (
-            (a[type] as string).toLowerCase() <
-            (b[type] as string).toLowerCase()
-          ) {
-            return sort.val * -1;
-          }
-          if (
-            (a[type] as string).toLowerCase() >
-            (b[type] as string).toLowerCase()
-          ) {
-            return sort.val * 1;
-          }
-
-          return 0;
-        });
-      }
-    }
-
-    return filters.type
-      ? newArray.filter((property) => {
-          return property.type === filters.type;
-        })
-      : newArray;
-  }, [filters, properties]);
+  const searchedProperties = useFilters({ filters, properties });
 
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -102,7 +45,7 @@ export default function Home() {
         onClick={toggleDrawer}
       />
       <Wrapper>
-        {filteredSortedProperties.map((property) => {
+        {searchedProperties.map((property) => {
           return (
             <PropertyCard
               key={`prop-id-${property.id}`}
